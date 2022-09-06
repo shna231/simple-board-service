@@ -15,7 +15,7 @@ import { BoardModule } from './board/board.module';
       username: process.env.USERNAME,
       password: process.env.PASSWORD,
       database: process.env.DATABASE,
-      entities: [__dirname + '/apis/**/*.entity.*'],
+      entities: [__dirname + '/**/*.entity.*'],
       synchronize: true,
       logging: true,
     }),
