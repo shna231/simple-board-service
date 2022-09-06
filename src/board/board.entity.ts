@@ -11,7 +11,7 @@ export class Board {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'varchar', length: '10' })
+  @Column({ type: 'varchar' })
   password: string;
 
   @Column({ type: 'varchar', length: '20' })

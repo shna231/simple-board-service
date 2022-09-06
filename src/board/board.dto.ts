@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, MinLength, MaxLength } from 'class-validator';
 
 export class BoardCreateDTO {
   @ApiProperty({
@@ -9,6 +9,7 @@ export class BoardCreateDTO {
   })
   @IsNotEmpty()
   @IsString()
+  @MinLength(6)
   password: string;
 
   @ApiProperty({
@@ -18,6 +19,7 @@ export class BoardCreateDTO {
   })
   @IsNotEmpty()
   @IsString()
+  @MaxLength(20)
   title: string;
 
   @ApiProperty({
@@ -27,5 +29,6 @@ export class BoardCreateDTO {
   })
   @IsNotEmpty()
   @IsString()
-  contenxt: string;
+  @MaxLength(200)
+  content: string;
 }
