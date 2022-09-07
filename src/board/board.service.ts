@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ForbiddenException,
   Injectable,
   NotFoundException,
@@ -21,6 +22,16 @@ export class BoardService {
       const { title, content, password } = input;
       const salt = await bcrypt.genSalt();
       const hashed_password = await bcrypt.hash(password, salt);
+
+      const regx = /^(?=.*[a-zA-Z])(?=.*\d{1,14}).{6,14}$/;
+      if (!regx.test(password)) {
+        throw new BadRequestException(
+          Object.assign({
+            statusCode: 400,
+            message: '비밀번호에는 최소 1자 이상의 숫자가 포함되어야 합니다.',
+          }),
+        );
+      }
 
       await this.boardrepository.save({
         title: title,
