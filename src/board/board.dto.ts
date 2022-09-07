@@ -15,7 +15,7 @@ export class BoardCreateDTO {
   @ApiProperty({
     description: '게시글 제목',
     required: true,
-    default: 'title1',
+    default: '❤ title1',
   })
   @IsNotEmpty()
   @IsString()
@@ -25,7 +25,7 @@ export class BoardCreateDTO {
   @ApiProperty({
     description: '게시글 내용',
     required: true,
-    default: 'come contents',
+    default: 'come contents 😽',
   })
   @IsNotEmpty()
   @IsString()
