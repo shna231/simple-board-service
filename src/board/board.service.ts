@@ -77,7 +77,7 @@ export class BoardService {
             message: '삭제하고자 하는 게시글이 이미 존재하지 않습니다.',
           }),
         );
-      } else if (!bcrypt.compare(input.password, page.password)) {
+      } else if (!(await bcrypt.compare(input.password, page.password))) {
         throw new ForbiddenException(
           Object.assign({
             statusCode: 403,
