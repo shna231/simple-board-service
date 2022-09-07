@@ -1,4 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { BoardCreateDTO } from './board.dto';
 import { BoardService } from './board.service';
@@ -9,6 +15,7 @@ export class BoardController {
   constructor(private readonly boardService: BoardService) {}
 
   @Post()
+  @UsePipes(ValidationPipe)
   @ApiOperation({
     summary: '게시글 생성 API',
     description: '제목, 내용, 비밀번호를 입력하고 게시글을 작성합니다.',
