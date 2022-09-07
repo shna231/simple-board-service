@@ -52,7 +52,7 @@ export class BoardService {
     try {
       const limit = 20;
       const pages = await this.boardrepository.find({
-        select: { title: true, content: true },
+        select: { title: true, content: true, createdAt: true },
         order: { createdAt: 'DESC' },
         skip: offset,
         take: limit,
