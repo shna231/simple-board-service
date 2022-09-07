@@ -1,7 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { BoardCreateDTO } from './board.dto';
+import { BoardCreateDTO, BoardDeleteDTO } from './board.dto';
 import { Board } from './board.entity';
 import * as bcrypt from 'bcrypt';
 
@@ -57,6 +61,37 @@ export class BoardService {
         statusCode: 200,
         message: '게시글을 불러옵니다.',
       });
+    } catch (NotFoundException) {
+      throw NotFoundException;
+    }
+  }
+
+  async delete(input: BoardDeleteDTO) {
+    try {
+      const page = await this.boardrepository.findOneBy({ id: input.id });
+
+      if (!page) {
+        throw new NotFoundException(
+          Object.assign({
+            statsCode: 404,
+            message: '삭제하고자 하는 게시글이 이미 존재하지 않습니다.',
+          }),
+        );
+      } else if (!bcrypt.compare(input.password, page.password)) {
+        throw new ForbiddenException(
+          Object.assign({
+            statusCode: 403,
+            message: '게시글의 비밀번호와 일치하지 않습니다.',
+          }),
+        );
+      } else {
+        await this.boardrepository.softDelete(input.id);
+
+        return Object.assign({
+          statuscode: 200,
+          message: '게시글을 삭제하였습니다.',
+        });
+      }
     } catch (NotFoundException) {
       throw NotFoundException;
     }

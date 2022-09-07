@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -8,7 +9,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { BoardCreateDTO } from './board.dto';
+import { BoardCreateDTO, BoardDeleteDTO } from './board.dto';
 import { BoardService } from './board.service';
 
 @ApiTags('게시글')
@@ -33,5 +34,14 @@ export class BoardController {
   })
   async getPart(@Param('offset') offset: number) {
     return await this.boardService.getPart(offset);
+  }
+
+  @Delete()
+  @ApiOperation({
+    summary: '게시글 삭제 API',
+    description: '게시글과 입력한 비밀번호가 일치하면 게시글을 삭제합니다.',
+  })
+  async delete(@Body() req: BoardDeleteDTO) {
+    return await this.boardService.delete(req);
   }
 }

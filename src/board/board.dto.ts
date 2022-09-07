@@ -32,3 +32,23 @@ export class BoardCreateDTO {
   @MaxLength(200)
   content: string;
 }
+
+export class BoardDeleteDTO {
+  @ApiProperty({
+    description: '게시글 아이디',
+    required: true,
+  })
+  @IsNotEmpty()
+  @IsString()
+  id: string;
+
+  @ApiProperty({
+    description: '게시글 비밀번호',
+    required: true,
+    default: 'abcde1',
+  })
+  @IsNotEmpty()
+  @IsString()
+  @MinLength(6)
+  password: string;
+}
