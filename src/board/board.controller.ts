@@ -1,7 +1,10 @@
 import {
   Body,
   Controller,
+  Get,
+  Param,
   Post,
+  Query,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -22,5 +25,14 @@ export class BoardController {
   })
   async create(@Body() generalInputDto: BoardCreateDTO) {
     return await this.boardService.create(generalInputDto);
+  }
+
+  @Get(':offset')
+  @ApiOperation({
+    summary: '게시글 조회 API',
+    description: 'offset 값을 기준으로 게시글을 최신 순 20개씩 조회합니다.',
+  })
+  async getPart(@Param('offset') offset: number) {
+    return await this.boardService.getPart(offset);
   }
 }
